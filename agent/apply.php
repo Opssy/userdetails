@@ -1,3 +1,12 @@
+<?php
+ob_clean();
+ob_start();
+session_start();
+if (!isset($_COOKIE['user']) || !isset($_COOKIE['password'])) {
+	header("location: login.php");
+	die();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,16 +33,24 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 			<a class="navbar-brand" href="index.html">
 				<h1 style="color:#89379a;">Travfi</h1>
 			</a>
-			<p style="color: rgb(111, 116, 121);margin-bottom: 15px;">Thanks for Registering with us. We can’t wait to work with you!
-			</p>
+			<!--<p style="color: rgb(111, 116, 121);margin-bottom: 15px;">Thanks for Registering with us. We can’t wait to work with you!
+			</p>-->
 		</div>
 		<!--//header-->
 		<!--main-->
 	<div class="agileits-register">
-		<form action="#" method="post">
+		<form action="handlers/process-application.php" method="post">
+		<?php
+                                if (isset($_SESSION['error'])) {
+                                    ?>
+                                    <p class="error" style="padding:12px;"><?php echo($_SESSION['error'][0]); unset($_SESSION['error']) ?></p>
+
+                                <?php
+                                }
+                                ?>
 				<div class="w3_modal_body_grid w3_modal_body_grid1">
 					<span>Agency Trade Name:</span>
-					<input type="text" name="agency name" placeholder="Agency Trade Name" required=""/>
+					<input type="text" name="trade_name" placeholder="Agency Trade Name" required=""/>
 					<div class="clear"> </div>
 				</div>
 				<div class="w3_modal_body_grid w3_modal_body_grid1">
